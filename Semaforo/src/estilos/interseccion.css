@@ -1,0 +1,324 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #e7bcbc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+.semaforo {
+    width: 40px;
+    padding: 8px;
+    background: #222;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.luz {
+    width: 30px;
+    height: 30px;
+    margin: 5px 0;
+    border-radius: 50%; /* Forma circular */
+    opacity: 0.25;
+    transition: opacity 0.3s, box-shadow 0.3s;
+}
+
+  /* Colores de las luces */
+.luz.rojo {
+    background: red;
+}
+.luz.amarillo {
+    background: yellow;
+}
+.luz.verde {
+    background: lime;
+}
+
+.luz.encendido {
+    opacity: 1;
+}
+
+  /* Animaciones específicas por color */
+.luz.rojo.encendido {
+    animation: red-glow 1s infinite alternate;
+    box-shadow: 0 0 15px red, 0 0 25px red, 0 0 35px red;
+}
+.luz.amarillo.encendido {
+    animation: yellow-glow 1s infinite alternate;
+    box-shadow: 0 0 15px yellow, 0 0 25px yellow, 0 0 35px yellow;
+}
+.luz.verde.encendido {
+    animation: green-glow 1s infinite alternate;
+    box-shadow: 0 0 15px lime, 0 0 25px lime, 0 0 35px lime;
+}
+
+@keyframes red-glow {
+    0%,
+    100% {
+    box-shadow: 0 0 15px red, 0 0 25px red, 0 0 35px red;
+    }
+    50% {
+    box-shadow: 0 0 25px red, 0 0 40px red, 0 0 50px red;
+    }
+}
+
+@keyframes yellow-glow {
+    0%,
+    100% {
+    box-shadow: 0 0 15px yellow, 0 0 25px yellow, 0 0 35px yellow;
+    }
+    50% {
+    box-shadow: 0 0 25px yellow, 0 0 40px yellow, 0 0 50px yellow;
+    }
+}
+
+@keyframes green-glow {
+    0%,
+    100% {
+    box-shadow: 0 0 15px lime, 0 0 25px lime, 0 0 35px lime;
+    }
+    50% {
+    box-shadow: 0 0 25px lime, 0 0 40px lime, 0 0 50px lime;
+    }
+}
+
+.interseccion {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 50px auto;
+    background: #555;
+}
+
+  /* Calles horizontales y verticales */
+.interseccion::before,
+.interseccion::after {
+    content: "";
+    position: absolute;
+    background: #888;
+    z-index: 0;
+}
+
+.interseccion::before {
+    /* Calle horizontal */
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    transform: translateY(-50%);
+}
+
+.interseccion::after {
+    /* Calle vertical */
+    left: 50%;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.interseccion .lane {
+    position: absolute;
+    background: repeating-linear-gradient(
+    to bottom,
+    rgb(146, 146, 146) 0 10px,
+    transparent 10px 30px
+    );
+    z-index: 1;
+}
+  /* Carriles verticales: solo arriba y abajo del cruce */
+.interseccion .lane.vertical {
+    width: 4px;
+    left: 50%;
+    top: 0;
+    height: calc(50% - 75px);
+    transform: translateX(-50%);
+}
+
+.interseccion .lane.vertical.bottom {
+    top: auto;
+    bottom: 0;
+    height: calc(50% - 75px);
+}
+
+  /* Carriles horizontales: solo a la izquierda y derecha del cruce */
+.interseccion .lane.horizontal {
+    height: 4px;
+    top: 50%;
+    left: 0;
+    width: calc(50% - 75px);
+    transform: translateY(-50%);
+}
+
+.interseccion .lane.horizontal.right {
+    left: auto;
+    right: 0;
+    width: calc(50% - 75px);
+}
+
+.norte {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    z-index: 10;
+}
+
+.sur {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    z-index: 10;
+}
+
+.este {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translate(100%, -50%);
+    z-index: 10;
+}
+
+.oeste {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-100%, -50%);
+    z-index: 10;
+}
+
+.arrow {
+    font-size: 50px;
+    position: absolute;
+    z-index: 3;
+    color: rgb(37, 38, 37);
+    opacity: 0.8;
+}
+
+@keyframes move-up {
+    0% {
+    transform: translate(-50%, 0);
+    }
+    100% {
+    transform: translate(-50%, -20px);
+    }
+}
+@keyframes move-down {
+    0% {
+    transform: translate(-50%, 0);
+    }
+    100% {
+    transform: translate(-50%, 20px);
+    }
+}
+@keyframes move-left {
+    0% {
+    transform: translate(0, -50%);
+    }
+    100% {
+    transform: translate(-20px, -50%);
+    }
+}
+@keyframes move-right {
+    0% {
+    transform: translate(0, -50%);
+    }
+    100% {
+    transform: translate(20px, -50%);
+    }
+}
+
+.arrow-up {
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: move-up 1s infinite alternate;
+}
+
+.arrow-down {
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: move-down 1s infinite alternate;
+}
+
+.arrow-left {
+    top: 50%;
+    left: 20%;
+    transform: translateY(-50%);
+    animation: move-left 1s infinite alternate;
+}
+
+.arrow-right {
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+    animation: move-right 1s infinite alternate;
+}
+
+  /* Carriles verticales */
+.interseccion .lane.vertical {
+    position: absolute;
+    width: 4px;
+    background: repeating-linear-gradient(
+    to bottom,
+    white 0 10px,
+    transparent 10px 30px
+    );
+    z-index: 1;
+}
+.interseccion .lane.vertical.top {
+    top: 0;
+    height: calc(50% - 50px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.interseccion .lane.vertical.bottom {
+    bottom: 0;
+    height: calc(50% - 50px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+  /* Carriles horizontales */
+.interseccion .lane.horizontal {
+    position: absolute;
+    height: 4px;
+    background: repeating-linear-gradient(
+    to right,
+    white 0 10px,
+    transparent 10px 30px
+    );
+    z-index: 1;
+}
+.interseccion .lane.horizontal.left {
+    left: 0;
+    width: calc(50% - 50px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+.interseccion .lane.horizontal.right {
+    right: 0;
+    width: calc(50% - 50px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
